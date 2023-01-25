@@ -1,10 +1,10 @@
-import pyautogui
+import pyautogui, time
 
 
 class GameInput():
     def __init__(self, length, height):
         # split screen into squares
-        self.input = ['a', 'b', 'c', 'd']
+        self.input = ['a', 'b', 'c', 'd']   # grid, columns first
         # transform into grid
         self.dim_x = 2
         self.dim_y = 2
@@ -24,3 +24,8 @@ class GameInput():
                     chosen_num = i*self.dim_x+j
         chosen_key = self.input[chosen_num]
         pyautogui.press(chosen_key)
+
+if __name__ == "__main__":
+    game_input = GameInput(pyautogui.size()[0], pyautogui.size()[1])
+    time.sleep(1)
+    game_input.coordinate_input(pyautogui.position())
