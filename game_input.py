@@ -4,10 +4,15 @@ import pyautogui, time
 class GameInput():
     def __init__(self, length, height):
         # split screen into squares
-        self.input = ['a', 'b', 'c', 'd']   # grid, columns first
+        self.input = ['enter', 'left', 'enter', 'up', 'enter', 'down', 'enter', 'right', 'enter']   # grid, columns first
         # transform into grid
-        self.dim_x = 2
-        self.dim_y = 2
+        """
+        enter      up   enter
+        left    enter   right
+        enter    down   enter
+        """
+        self.dim_x = 3
+        self.dim_y = 3
         self.grid_length = length/self.dim_x
         self.grid_height = height/self.dim_y
 
