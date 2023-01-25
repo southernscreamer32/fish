@@ -1,6 +1,22 @@
 from twitchio.ext import commands
+from random import choice
+
+import openai
 
 from config import *
+
+def chatgpt(prompt):
+    completion = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=f"I am having a conversation and you are a Blue Tilapia in an aquarium. {prompt}",
+        max_tokens=1024,
+        n=1,
+        stop=None,
+        temperature=0.5,
+    )
+
+    return completion.choices[0].text
+
 
 class Bot(commands.Bot):
     def __init__(self):
@@ -41,7 +57,15 @@ class Bot(commands.Bot):
 
     @commands.command()
     async def fact(self, ctx):
-        pass
+        with open('facts.txt', 'r') as f:
+            await ctx.send(choice(f.readlines()))
+
+    @commands.command()
+    async def ask(self, ctx):
+        response = chatgpt(ctx.message.content)
+
+        await ctx.send(response)
+
 
     @commands.command()
     async def toggle(self, ctx):
@@ -57,5 +81,7 @@ class Bot(commands.Bot):
             raise error
 
 if __name__ == "__main__":
+    openai.api_key = OPEN_AI_KEY
+
     bot = Bot()
     bot.run()
