@@ -7,21 +7,29 @@ from gui.gui import MainWindow
 from twitchbot.bot import Bot
 from sensorinterface import ArduinoComm
 
+import openai
+from twitchbot.config import OPEN_AI_KEY
+
 def tb():
-    # # global bot
+    openai.api_key = OPEN_AI_KEY
+
+    global bot
+
     bot = Bot()
     bot.run()
 
-    # print("a")
 
 def comms():
-    # global ac
     ac = ArduinoComm()
 
     while True:
         window.display.info.tds.update_value(ac.tds)
-        window.display.info.ph.update_value(ac.pH)
+        window.display.info.ph.update_value(round(ac.pH, 2))
         window.display.info.weight.update_value(ac.weight)
+
+        if bot.activate_feed:
+            bot.activate_feed = False
+            ac.feed_num(2)
 
 if __name__ == "__main__":
     app = QApplication([])

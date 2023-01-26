@@ -21,9 +21,7 @@ class MainWindow(QMainWindow):
 
         self.setCentralWidget(self.frame)
 
-        print(1)
-
-        # self.move(1400,850)
+        self.move(1400,850)
         
 class Display(QWidget):
     def __init__(self):
@@ -38,7 +36,7 @@ class Display(QWidget):
         """)
 
 
-        self.camera = Camera(2)
+        self.camera = Camera(1)
         self.info = Info()
 
         self.layout = QVBoxLayout()

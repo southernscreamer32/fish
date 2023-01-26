@@ -23,6 +23,7 @@ class Bot(commands.Bot):
         super().__init__(token=OAUTH_TOKEN, prefix="fish", initial_channels=CHANNELS)
 
         self.feeding = True
+        self.activate_feed = False
 
     async def event_ready(self):
         print(f"Logged in as: {self.nick}")
@@ -39,11 +40,12 @@ class Bot(commands.Bot):
     async def help(self, ctx):
         await ctx.send(f'"{self._prefix} help": shows this • "{self._prefix} stats": current stats from fish tank • "{self._prefix} feed": activate the fish feeder (30-second cooldown)')
 
-    @commands.cooldown(rate=1, per=30, bucket=commands.Bucket.channel)
+    @commands.cooldown(rate=1, per=60, bucket=commands.Bucket.channel)
     @commands.command()
     async def feed(self, ctx):
         if self.feeding:
             await ctx.send(f"/announce The fish feeder has been activated by {ctx.author.name}!")
+            self.activate_feed = True
         else:
             await ctx.send("Feeding command is not active!")
 
