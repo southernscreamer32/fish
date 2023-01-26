@@ -10,15 +10,20 @@ class MainWindow(QMainWindow):
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint | Qt.WindowType.WindowStaysOnTopHint)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
 
+        self.display = Display()
+
         self.frame = QWidget()
         self.frame.layout = QVBoxLayout()
 
-        self.frame.layout.addWidget(Display())
+        self.frame.layout.addWidget(self.display)
+
         self.frame.setLayout(self.frame.layout)
 
         self.setCentralWidget(self.frame)
 
-        self.move(1400,850)
+        print(1)
+
+        # self.move(1400,850)
         
 class Display(QWidget):
     def __init__(self):
