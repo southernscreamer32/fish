@@ -69,9 +69,10 @@ class ArduinoComm:
                             curr_index += 1
                     elif curr_index == 1:
                         command = int.from_bytes(val, "big")
-                        match command:
-                            case _:
-                                target_len = 4
+                        target_len = 4
+                        # match command:
+                        #     case _:
+                        #         target_len = 4
                         curr_index += 1
                     elif curr_index-2 < target_len:
                         buffer += val
@@ -79,16 +80,22 @@ class ArduinoComm:
                     else:
                         if val == ArduinoComm.FOOTER:
                             data = (struct.unpack("=f", buffer))[0]
-                            match (command):
-                                case 0x01:  #weight
-                                    self.weight = data
-                                    print("weight: " + str(self.weight))
-                                case 0x02:  #pH
-                                    self.pH = data
-                                    print("pH: " + str(self.pH))
-                                case 0x03:  #tds
-                                    self.tds = data
-                                    print("tds: " + str(self.tds))
+                            if command == 0x01:
+                                self.weight = data
+                            elif command == 0x02:
+                                self.pH = data
+                            elif command == 0x03:
+                                self.tds = data
+                            # match (command):
+                            #     case 0x01:  #weight
+                            #         self.weight = data
+                            #         print("weight: " + str(self.weight))
+                            #     case 0x02:  #pH
+                            #         self.pH = data
+                            #         print("pH: " + str(self.pH))
+                            #     case 0x03:  #tds
+                            #         self.tds = data
+                            #         print("tds: " + str(self.tds))
                         break
        
 
