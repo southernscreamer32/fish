@@ -2,9 +2,10 @@ import pyautogui, time
 
 
 class GameInput():
-    def __init__(self, length, height):
+    def __init__(self, length, height, tank_left, tank_top, tank_right, tank_bottom):
         # split screen into squares
-        self.input = ['enter', 'left', 'enter', 'up', 'enter', 'down', 'enter', 'right', 'enter']   # grid, columns first
+        # self.input = ['enter', 'left', 'enter', 'up', 'enter', 'down', 'enter', 'right', 'enter']   # grid, columns first
+        self.input = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'] 
         # transform into grid
         """
         enter      up   enter
@@ -13,8 +14,10 @@ class GameInput():
         """
         self.dim_x = 3
         self.dim_y = 3
-        self.grid_length = length/self.dim_x
-        self.grid_height = height/self.dim_y
+        self.grid_length = (length)/self.dim_x
+        self.grid_height = (height)/self.dim_y
+        # generate grids
+
 
     def coordinate_input(self, coordinate):
         # coordinate is in the form of x, y in int

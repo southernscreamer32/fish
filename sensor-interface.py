@@ -58,6 +58,11 @@ class ArduinoComm:
             while True:
                 if self.serial_comm.in_waiting > 0:
                     val = self.serial_comm.read()
+                    # print(val)
+                    # if (val == ArduinoComm.HEADER):
+                    #     print("HEADER")
+                    # if (val == ArduinoComm.FOOTER):
+                    #     print("FOOTER")
                     if not header_found:
                         if val == ArduinoComm.HEADER:
                             header_found = True
@@ -97,12 +102,13 @@ class ArduinoComm:
 
     def feed_num(self, num_time=1):
         if type(num_time) == int:
-            self.write_queue.put(struct.pack("=ccic"),ArduinoComm.HEADER, 0x1A.to_bytes(length=1, byteorder='big', signed=False), num_time, ArduinoComm.FOOTER)
+            self.write_queue.put(struct.pack(("=ccic"),ArduinoComm.HEADER, 0x1A.to_bytes(length=1, byteorder='big', signed=False), num_time, ArduinoComm.FOOTER))
 
 if __name__ == "__main__":
     comms = ArduinoComm()
     while True:
-        sleep(0.1)
+        input()
+        comms.feed_once()
         # print("weight: " + str(comms.weight))
         # print("pH:" + str(comms.pH))
         # print("temp: " + str(comms.temp))

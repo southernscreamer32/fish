@@ -11,11 +11,11 @@
 #define MASS_PIN 3
 #define MASS_CLOCK 4
 #define PH_OFFSET 0
-#define SENS_DELAY 1000
+#define SENS_DELAY 10
 #define WEIGHT_X1 9243475
 #define WEIGHT_X0 8951688
 #define WEIGHT_Y1 600
-#define SERVO_PIN 7
+#define SERVO_PIN 9
 
 volatile Servo foodServo;
 
@@ -114,6 +114,7 @@ void loop() {
         switch (command){
           case 0x1A:  // add to feed num
             feedQueued += ((int*)data)[0];
+//            sendData(0x01, foodWeight);
           break;
         }
       }
@@ -173,7 +174,6 @@ void readSensors(){
 //  Serial.println(tds);
   sendData(0x01, foodWeight);
   sendData(0x02, pH);
-//  sendData(0x03, temp);
   sendData(0x03, tds);
 }
 
