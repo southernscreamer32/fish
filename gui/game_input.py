@@ -4,8 +4,8 @@ import pyautogui, time
 class GameInput():
     def __init__(self):
         # split screen into squares
-        # self.input = ['enter', 'left', 'enter', 'up', 'enter', 'down', 'enter', 'right', 'enter']   # grid, columns first
-        self.input = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'] 
+        self.input = ['enter', 'left', 'enter', 'up', 'enter', 'down', 'enter', 'right', 'enter']   # grid, columns first
+        # self.input = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'] 
         # transform into grid
         """
         enter      up   enter

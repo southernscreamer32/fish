@@ -3,7 +3,7 @@ from PyQt6.QtCore import Qt
 
 from camera import Camera
 from info import Info
-# from game_input import GameInput
+# from .game_input import GameInput
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -38,7 +38,7 @@ class Display(QWidget):
         # self.game = GameInput()
 
 
-        self.camera = Camera(1)
+        self.camera = Camera(0)
         self.info = Info()
 
         self.layout = QVBoxLayout()
