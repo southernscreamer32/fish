@@ -23,6 +23,7 @@ class InfoLabel(QLabel):
 
         self.setStyleSheet("""
             font-weight: 700;
+            font-size: 20px;
 
             color: white;
         """)

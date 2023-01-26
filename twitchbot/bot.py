@@ -3,12 +3,12 @@ from random import choice
 
 import openai
 
-from config import *
+from .config import *
 
 def chatgpt(prompt):
     completion = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=f"I am having a conversation and you are a Blue Tilapia in an aquarium. {prompt}",
+        engine="text-curie-001",
+        prompt=f'You are a fish in an aquarium being live streamed on Twitch. A viewer is saying to you: {prompt}',
         max_tokens=1024,
         n=1,
         stop=None,
@@ -24,10 +24,6 @@ class Bot(commands.Bot):
 
         self.feeding = True
 
-        self.temp = 0
-        self.ph = 0
-        self.tds = 0
-
     async def event_ready(self):
         print(f"Logged in as: {self.nick}")
 
@@ -42,10 +38,6 @@ class Bot(commands.Bot):
     @commands.command()
     async def help(self, ctx):
         await ctx.send(f'"{self._prefix} help": shows this • "{self._prefix} stats": current stats from fish tank • "{self._prefix} feed": activate the fish feeder (30-second cooldown)')
-
-    @commands.command()
-    async def stats(self, ctx):
-        await ctx.send(f"Temp: {self.temp}°C • pH: {self.ph} • TDS: {self.tds} ppm")
 
     @commands.cooldown(rate=1, per=30, bucket=commands.Bucket.channel)
     @commands.command()
@@ -64,7 +56,10 @@ class Bot(commands.Bot):
     async def ask(self, ctx):
         response = chatgpt(ctx.message.content)
 
-        await ctx.send(response)
+        if len(response) <= 500:
+            await ctx.send(response)
+        else:
+            await ctx.send("The response was too long. Please try again!")
 
 
     @commands.command()
@@ -77,6 +72,8 @@ class Bot(commands.Bot):
     async def event_command_error(self, ctx, error):
         if isinstance(error, commands.errors.CommandOnCooldown):
             await ctx.send(f'The "{error.command.name}" command is currently on a cooldown for another {round(error.retry_after)} second(s)! {ctx.author.name}')
+        elif isinstance(error, openai.error.RateLimitError):
+            await ctx.send("The API server is currently overloaded, please try again later")
         elif not isinstance(error, commands.errors.CommandNotFound):
             raise error
 
