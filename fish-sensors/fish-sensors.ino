@@ -71,12 +71,23 @@ void setup() {
 }
 
 void loop() {
+//  Serial.write('a');
   unsigned long now = millis();
   deltaTime = now - pastTime;
   pastTime = now;
-  if (sensClock < 0){
+  if (deltaTime == 0){
+    deltaTime = 1;
+  }
+//  Serial.print("sensClock: ");
+//  Serial.println(sensClock);
+//  Serial.print("delta time: ");
+//  Serial.println(deltaTime);
+  if (sensClock <= 0){
     readSensors();
     sensClock = SENS_DELAY;
+    sendData(0x01, foodWeight);
+    sendData(0x02, pH);
+    sendData(0x03, tds);
   }
   else{
     sensClock -= deltaTime;
@@ -172,9 +183,6 @@ void readSensors(){
 //  Serial.println(temp);
 //  Serial.print("tds: ");
 //  Serial.println(tds);
-  sendData(0x01, foodWeight);
-  sendData(0x02, pH);
-  sendData(0x03, tds);
 }
 
 void calcMovingAverage(){
