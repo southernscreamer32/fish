@@ -5,7 +5,7 @@ import librosa as lr
 import numpy as np
 import pyrubberband as pyrb
 
-openai.api_key = "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"
+openai.api_key = ""
 tts = TTS("tts_models/en/vctk/vits", gpu=False)
 
 
