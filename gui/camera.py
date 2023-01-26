@@ -4,11 +4,12 @@ from PyQt6.QtCore import Qt, QThread, pyqtSignal, pyqtSlot
 
 import cv2
 from numpy import array, ndarray
+from game_input import GameInput
 
 class Camera(QLabel):
     def __init__(self, port):
         super().__init__()
-
+        # self.game = None
         self.thread = VideoThread(port)
         self.thread.change_pixmap_signal.connect(self.update_image)
         self.thread.start()
@@ -35,6 +36,7 @@ class VideoThread(QThread):
 
     def __init__(self, port):
         super().__init__()
+        self.game = GameInput()
 
         self.running = True
         self.port = port
@@ -64,7 +66,6 @@ class VideoThread(QThread):
 
         while self.running:
             ret, image = cap.read()
-
             if ret:
                 image_HSV = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
                 image_threshold = cv2.inRange(image_HSV, (80, 140, 60), (150, 255, 255))
@@ -74,12 +75,14 @@ class VideoThread(QThread):
                 keypoints = detector.detect(image_threshold)
 
                 if len(keypoints) > 0:
-                    if keypoints[0].pt[0] > 500 and keypoints[0].pt[1] > 500:
-                        # print('fish gaming!!!!!!!!')
-                        pass
-                    else:
-                        # print('not gaming!!!!!!')
-                        pass
+                    self.game.coordinate_input(keypoints[0].pt, int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+                    # print("gaming")
+                    # if keypoints[0].pt[0] > 500 and keypoints[0].pt[1] > 500:
+                    #     # print('fish gaming!!!!!!!!')
+                    #     pass
+                    # else:
+                    #     # print('not gaming!!!!!!')
+                    #     pass
                 else:
                     # print('no fish....')
                     pass

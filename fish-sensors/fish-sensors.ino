@@ -28,10 +28,10 @@ bool headerFound = false;
 //OneWire oneWire(TEMP_PIN);
 //DallasTemperature sensor(&oneWire);
 
-float temp = 25;
+float temp = 25.4;
 float pH = 7;
 float tds = 100;
-float foodWeight = 10;
+float foodWeight = 0;
 
 Q2HX711 hx711(MASS_PIN, MASS_CLOCK);
 unsigned long deltaTime;
@@ -85,9 +85,9 @@ void loop() {
   if (sensClock <= 0){
     readSensors();
     sensClock = SENS_DELAY;
-    sendData(0x01, foodWeight);
-    sendData(0x02, pH);
-    sendData(0x03, tds);
+//    sendData(0x01, foodWeight);
+//    sendData(0x02, pH);
+//    sendData(0x03, tds);
   }
   else{
     sensClock -= deltaTime;
@@ -158,7 +158,7 @@ void readSensors(){
   float ratio_1 = (float) (reading-WEIGHT_X0);
   float ratio_2 = (float) (WEIGHT_X1-WEIGHT_X0);
   float ratio = ratio_1/ratio_2;
-  float foodWeight = WEIGHT_Y1*ratio;
+  foodWeight = WEIGHT_Y1*ratio;
   
   // pH sensor
   float pHVol = analogRead(PH_PIN)*5.0/1024;  // why isn't this 5?
@@ -170,19 +170,23 @@ void readSensors(){
 
 
   // tds sensor
+  
   float tdsCo = 1.0+0.02*(temp-25.0);
   float tdsVol = (analogRead(TDS_PIN) * 5 / 1024) / tdsCo;
   tds = (133.42*tdsVol*tdsVol*tdsVol - 255.86*tdsVol*tdsVol + 857.39*tdsVol)*0.5;
 
-//  Serial.print("---");
-//  Serial.print("weight: ");
-//  Serial.println(foodWeight);
-//  Serial.print("pH: ");
-//  Serial.println(pH);
-//  Serial.print("temp: ");
-//  Serial.println(temp);
-//  Serial.print("tds: ");
-//  Serial.println(tds);
+  // Serial.print("---");
+  // Serial.print("weight: ");
+  // Serial.println(foodWeight);
+  // Serial.print("pH: ");
+  // Serial.println(pH);
+  // Serial.print("temp: ");
+  // Serial.println(temp);
+  // Serial.print("tds: ");
+  // Serial.println(tds);
+   sendData(0x01, foodWeight);
+   sendData(0x02, pH);
+   sendData(0x03, tds);
 }
 
 void calcMovingAverage(){

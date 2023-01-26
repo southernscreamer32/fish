@@ -80,8 +80,10 @@ class ArduinoComm:
                     else:
                         if val == ArduinoComm.FOOTER:
                             data = (struct.unpack("=f", buffer))[0]
+                            print(f"data: {data}")
                             if command == 0x01:
                                 self.weight = data
+                                print(f"weight: {self.weight}")
                             elif command == 0x02:
                                 self.pH = data
                             elif command == 0x03:

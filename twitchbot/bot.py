@@ -5,6 +5,7 @@ import openai
 import serial
 
 from .config import *
+from tts import TextToSpeech
 
 def chatgpt(prompt):
     completion = openai.Completion.create(
@@ -20,10 +21,10 @@ def chatgpt(prompt):
 
 
 class Bot(commands.Bot):
-    def __init__(self):
+    def __init__(self, tts):
         super().__init__(token=OAUTH_TOKEN, prefix="fish", initial_channels=CHANNELS)
-
         self.feeding = True
+        self.tts = tts  # TextToSpeech
 
     async def event_ready(self):
         print(f"Logged in as: {self.nick}")
@@ -53,7 +54,10 @@ class Bot(commands.Bot):
     @commands.command()
     async def fact(self, ctx):
         with open('facts.txt', 'r') as f:
-            await ctx.send(choice(f.readlines()))
+            reponse = choice(f.readlines())
+            await ctx.send(reponse)
+            self.tts.try_fishspeak(reponse)
+
 
     @commands.command()
     async def ask(self, ctx):
@@ -61,6 +65,7 @@ class Bot(commands.Bot):
 
         if len(response) <= 500:
             await ctx.send(response)
+            self.tts.try_fishspeak(response)
         else:
             await ctx.send("The response was too long. Please try again!")
 

@@ -1,8 +1,9 @@
 from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
 from PyQt6.QtCore import Qt
 
-from .camera import Camera
-from .info import Info
+from camera import Camera
+from info import Info
+# from game_input import GameInput
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -34,6 +35,7 @@ class Display(QWidget):
                 border-radius: 20px;
             }
         """)
+        # self.game = GameInput()
 
 
         self.camera = Camera(1)
