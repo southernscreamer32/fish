@@ -2,13 +2,14 @@ from twitchio.ext import commands
 from random import choice
 
 import openai
+import serial
 
 from .config import *
 
 def chatgpt(prompt):
     completion = openai.Completion.create(
         engine="text-curie-001",
-        prompt=f'You are a fish in an aquarium being live streamed on Twitch. A viewer is saying to you: {prompt}',
+        prompt=f'Answer this as if you were a fish in an aquarium being live streamed on Twitch. {prompt}',
         max_tokens=1024,
         n=1,
         stop=None,
@@ -23,7 +24,6 @@ class Bot(commands.Bot):
         super().__init__(token=OAUTH_TOKEN, prefix="fish", initial_channels=CHANNELS)
 
         self.feeding = True
-        self.activate_feed = False
 
     async def event_ready(self):
         print(f"Logged in as: {self.nick}")
@@ -38,14 +38,15 @@ class Bot(commands.Bot):
 
     @commands.command()
     async def help(self, ctx):
-        await ctx.send(f'"{self._prefix} help": shows this • "{self._prefix} stats": current stats from fish tank • "{self._prefix} feed": activate the fish feeder (30-second cooldown)')
+        await ctx.send(f'"{self._prefix} help": shows this• "{self._prefix} feed": activate the fish feeder (60-second cooldown) • "{self._prefix} fact": random fish fact • "{self._prefix} ask (question)": ask the fish a question (OpenAI)')
 
     @commands.cooldown(rate=1, per=60, bucket=commands.Bucket.channel)
     @commands.command()
     async def feed(self, ctx):
         if self.feeding:
             await ctx.send(f"/announce The fish feeder has been activated by {ctx.author.name}!")
-            self.activate_feed = True
+            with open("twitchbot/feed", "w") as f:
+                f.write("1")
         else:
             await ctx.send("Feeding command is not active!")
 

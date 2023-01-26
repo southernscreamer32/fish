@@ -10,14 +10,13 @@ from sensorinterface import ArduinoComm
 import openai
 from twitchbot.config import OPEN_AI_KEY
 
+from time import sleep
+
+
+
 def tb():
-    openai.api_key = OPEN_AI_KEY
-
-    global bot
-
     bot = Bot()
     bot.run()
-
 
 def comms():
     ac = ArduinoComm()
@@ -27,11 +26,22 @@ def comms():
         window.display.info.ph.update_value(round(ac.pH, 2))
         window.display.info.weight.update_value(ac.weight)
 
-        if bot.activate_feed:
-            bot.activate_feed = False
-            ac.feed_num(2)
+        with open("twitchbot/feed", "r+") as f:
+            if int(f.readlines()[0]) == 1:
+                f.seek(0)
+                f.truncate(0)
+                f.write("0")
+
+                ac.feed_num(2)
+
+                print("feed activated")
+
+        sleep(0.1)
+        
 
 if __name__ == "__main__":
+    openai.api_key = OPEN_AI_KEY
+
     app = QApplication([])
 
     window = MainWindow()
