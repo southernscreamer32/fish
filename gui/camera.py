@@ -75,11 +75,14 @@ class VideoThread(QThread):
 
                 if len(keypoints) > 0:
                     if keypoints[0].pt[0] > 500 and keypoints[0].pt[1] > 500:
-                        print('fish gaming!!!!!!!!')
+                        # print('fish gaming!!!!!!!!')
+                        pass
                     else:
-                        print('not gaming!!!!!!')
+                        # print('not gaming!!!!!!')
+                        pass
                 else:
-                    print('no fish....')
+                    # print('no fish....')
+                    pass
 
                 im_with_keypoints = cv2.drawKeypoints(image, keypoints, array([]), (0, 0, 255),
                                          cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
