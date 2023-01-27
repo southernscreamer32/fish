@@ -5,7 +5,7 @@ import numpy as np
 import pyrubberband as pyrb
 import queue, threading, time
 
-openai.api_key = ""
+openai.api_key = OPEN_AI_KEY
 class TextToSpeech():
     # text to speech handlesdropping 
     # curr_playing = False
