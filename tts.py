@@ -5,6 +5,7 @@ import numpy as np
 import pyrubberband as pyrb
 import queue, threading, time
 from config import *
+# import torch
 
 openai.api_key = OPEN_AI_KEY
 class TextToSpeech():
@@ -12,7 +13,11 @@ class TextToSpeech():
     # curr_playing = False
     audio = []
     def __init__(self):
-        self.tts = TTS("tts_models/en/vctk/vits", gpu=True)
+        # x = torch.rand(5, 3)
+        # print(x)
+        # print(torch.cuda.is_available())
+
+        self.tts = TTS("tts_models/en/vctk/vits", gpu=False)
         
         self.speak_queue = queue.Queue()
         
@@ -25,7 +30,7 @@ class TextToSpeech():
         devices = sd.query_devices()
         print(devices)
         self.audio_device = sd.default.device[0]
-        # print(self.audio_device)
+        print(self.audio_device)
         for device in devices:
             # print(device["name"])
             # print(device)
@@ -118,9 +123,9 @@ if __name__ == "__main__":
     # thread = threading.Thread(target=tts.try_fishspeak, daemon=True)
     # thread.start()
     time.sleep(1)
-    tts.speak_queue.put("can you laugh?")
+    tts.speak_queue.put(TextToSpeech.gpt("can you laugh?"))
     time.sleep(6)
-    tts.speak_queue.put("can you laugh?")
+    tts.speak_queue.put(TextToSpeech.gpt("What do you think about Xi Jinping"))
     # tts.fishspeak("Can you laugh?")
     # tts.fishspeak("Can you laugh?")
     time.sleep(5)
