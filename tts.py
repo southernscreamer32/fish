@@ -110,8 +110,6 @@ class TextToSpeech():
         # array = nightcore(array,22050)
 
         # start audio
-
-
         sd.play(array, 22050)
         status = sd.wait()
         sd.stop()

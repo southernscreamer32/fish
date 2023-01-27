@@ -6,7 +6,6 @@ from multiprocessing import Process
 from gui.gui import MainWindow
 from twitchbot.bot import Bot
 from sensorinterface import ArduinoComm
-from tts import TextToSpeech
 
 import openai
 from config import *
@@ -15,9 +14,9 @@ from time import sleep
 
 
 
-def tb(tts):
+def tb():
     # # global bot
-    bot = Bot(tts=tts)
+    bot = Bot()
     bot.run()
 
 def comms():
@@ -48,9 +47,9 @@ if __name__ == "__main__":
 
     window = MainWindow()
 
-    tts = TextToSpeech()
+    # tts = TextToSpeech()
 
-    tb_thread = Process(target=tb, args=[tts])
+    tb_thread = Process(target=tb)
     tb_thread.start()
 
     comms_thread = Thread(target=comms)

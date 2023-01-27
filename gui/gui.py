@@ -1,14 +1,14 @@
 from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
 from PyQt6.QtCore import Qt
 
-from camera import Camera
-from info import Info
+from .camera import Camera
+from .info import Info
 # from .game_input import GameInput
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowFlag(Qt.WindowType.FramelessWindowHint | Qt.WindowType.WindowStaysOnTopHint)
+        # self.setWindowFlag(Qt.WindowType.FramelessWindowHint | Qt.WindowType.WindowStaysOnTopHint)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
 
         self.display = Display()

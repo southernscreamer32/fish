@@ -4,7 +4,7 @@ from PyQt6.QtCore import Qt, QThread, pyqtSignal, pyqtSlot
 
 import cv2
 from numpy import array, ndarray
-from game_input import GameInput
+from .game_input import GameInput
 
 class Camera(QLabel):
     def __init__(self, port):
