@@ -59,14 +59,14 @@ class Bot(commands.Bot):
     @commands.command()
     async def fact(self, ctx):
         with open('facts.txt', 'r') as f:
-            reponse = choice(f.readlines())
-            await ctx.send(reponse)
-            self.tts.try_fishspeak(reponse)
+            response = choice(f.readlines())
+            await ctx.send(response)
+            self.tts.try_fishspeak(response)
 
 
     @commands.command()
     async def ask(self, ctx):
-        response = TextToSpeech.chatgpt(ctx.message.content)
+        response = TextToSpeech.gpt(ctx.message.content)
 
         if len(response) <= 500:
             await ctx.send(response)

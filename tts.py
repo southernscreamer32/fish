@@ -24,7 +24,7 @@ class TextToSpeech():
         # audio stuff
         self.curr_playing = False
         self.delay = 1  #delay in secs before saying something new
-        self.last_speak = time.process_time()
+        self.last_speak = time.time()
 
         self.audio = []
         devices = sd.query_devices()
@@ -87,8 +87,14 @@ class TextToSpeech():
             if not self.speak_queue.empty():
                 print("A")
                 prompt = self.speak_queue.get()
-                if time.process_time() - self.last_speak > self.delay and not self.curr_playing:
-                        self.fishspeak(prompt)
+                # process_time does not count sleeping
+                if time.time() - self.last_speak > self.delay and not self.curr_playing:
+                    print("speaking ")
+                    self.fishspeak(prompt)
+                else:
+                    print("refuse to speak")
+                    print(time.time() - self.last_speak)
+                    print(self.curr_playing)
             time.sleep(0.01)
                 
 
@@ -113,7 +119,7 @@ class TextToSpeech():
         sd.play(array, 22050)
         status = sd.wait()
         sd.stop()
-        self.last_speak = time.process_time()
+        self.last_speak = time.time()
         self.curr_playing = False
 
 if __name__ == "__main__":

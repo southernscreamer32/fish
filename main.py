@@ -31,6 +31,7 @@ def comms():
             if int(f.readlines()[0]) == 1:
                 f.seek(0)
                 f.truncate(0)
+
                 f.write("0")
 
                 ac.feed_num(2)
@@ -48,6 +49,7 @@ if __name__ == "__main__":
     window = MainWindow()
 
     # tts = TextToSpeech()
+
 
     tb_thread = Process(target=tb)
     tb_thread.start()
