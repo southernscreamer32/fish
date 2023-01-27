@@ -1,7 +1,6 @@
 import openai
 import sounddevice as sd
 from TTS.api import TTS
-import librosa as lr
 import numpy as np
 import pyrubberband as pyrb
 import queue, threading, time
@@ -12,7 +11,7 @@ class TextToSpeech():
     # curr_playing = False
     audio = []
     def __init__(self):
-        self.tts = TTS("tts_models/en/vctk/vits", gpu=False)
+        self.tts = TTS("tts_models/en/vctk/vits", gpu=True)
         
         self.speak_queue = queue.Queue()
         
