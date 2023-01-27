@@ -4,6 +4,7 @@ from TTS.api import TTS
 import numpy as np
 import pyrubberband as pyrb
 import queue, threading, time
+from config import *
 
 openai.api_key = OPEN_AI_KEY
 class TextToSpeech():

@@ -2,9 +2,8 @@ from twitchio.ext import commands
 from random import choice
 
 import openai
-import serial
 
-from .config import *
+from config import *
 from tts import TextToSpeech
 
 

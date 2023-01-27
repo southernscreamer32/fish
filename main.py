@@ -9,7 +9,7 @@ from sensorinterface import ArduinoComm
 from tts import TextToSpeech
 
 import openai
-from twitchbot.config import OPEN_AI_KEY
+from config import *
 
 from time import sleep
 
