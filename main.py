@@ -25,7 +25,7 @@ def comms():
     while True:
         window.display.info.tds.update_value(ac.tds)
         window.display.info.ph.update_value(round(ac.pH, 2))
-        window.display.info.weight.update_value(ac.weight)
+        window.display.info.weight.update_value(round(ac.weight,2))
 
         with open("twitchbot/feed", "r+") as f:
             if int(f.readlines()[0]) == 1:
