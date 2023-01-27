@@ -7,19 +7,23 @@ import serial
 from .config import *
 from tts import TextToSpeech
 
-def chatgpt(prompt):
-    completion = openai.Completion.create(
-        engine="text-curie-001",
-        prompt=f'Answer this as if you were a fish in an aquarium being live streamed on Twitch. {prompt}',
-        max_tokens=1024,
-        n=1,
-        stop=None,
-        temperature=0.9,
-        presence_penalty=0.5,
-        frequency_penalty=0.5,
-    )
 
-    return completion.choices[0].text
+#just use from tts
+
+
+# def chatgpt(prompt):
+#     completion = openai.Completion.create(
+#         engine="text-curie-001",
+#         prompt=f'Answer this as if you were a fish in an aquarium being live streamed on Twitch. {prompt}',
+#         max_tokens=1024,
+#         n=1,
+#         stop=None,
+#         temperature=0.9,
+#         presence_penalty=0.5,
+#         frequency_penalty=0.5,
+#     )
+#
+#     return completion.choices[0].text
 
 
 class Bot(commands.Bot):
@@ -63,7 +67,7 @@ class Bot(commands.Bot):
 
     @commands.command()
     async def ask(self, ctx):
-        response = chatgpt(ctx.message.content)
+        response = TextToSpeech.chatgpt(ctx.message.content)
 
         if len(response) <= 500:
             await ctx.send(response)

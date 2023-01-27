@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8e693de-ea99-407f-8797-529841266d79" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/facts.txt" beforeDir="false" afterPath="$PROJECT_DIR$/facts.txt" afterDir="false" />
+    <list default="true" id="c40b82d6-f85d-46cd-8f45-e290c1ba897e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/tts.py" beforeDir="false" afterPath="$PROJECT_DIR$/tts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/twitchbot/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitchbot/bot.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,26 +16,26 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2KrNIQuYcz1dKxJQUWFRY1Y1bK6" />
+  <component name="ProjectId" id="2KtFvCzU7501ViVbHXXV7vnRIPu" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/aidan/PycharmProjects/fish&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/Users/erndias/PycharmProjects/fish"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d8e693de-ea99-407f-8797-529841266d79" name="Changes" comment="" />
-      <created>1674728662089</created>
+      <changelist id="c40b82d6-f85d-46cd-8f45-e290c1ba897e" name="Changes" comment="" />
+      <created>1674786200642</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1674728662089</updated>
+      <updated>1674786200642</updated>
     </task>
     <servers />
   </component>

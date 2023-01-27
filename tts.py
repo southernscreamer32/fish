@@ -60,7 +60,7 @@ class TextToSpeech():
     def gpt(prompt):
         completion = openai.Completion.create(
             engine="text-davinci-003",
-            prompt=f"You are a Blue Tilapia in an aquarium, and I am having a conversation with you. {prompt}",
+            prompt=f"Answer this as if you were a fish in an aquarium being live streamed on Twitch. {prompt}",
             max_tokens=1024,
             n=1,
             stop=None,
