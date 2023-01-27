@@ -9,3 +9,5 @@ There are almost 28,000 known species of fish!
 Fish have two primary mwans of swimming: Body fin propulsion, and median fin propulsion. Body fin propulsion is more efficient, while median fin propulsion is more agile.
 Most bony fish have swim bladders, air-filled sacs that maintain buoyancy to stay in the water. 
 FishBase is a global database of fish, with over 35,000 described subspecies of distinct fish.
+There are roughly as many species of freshwater fish as saltwater fish
+Migratory fish can consistently navigate thousands of kilometers with just their instincts!
