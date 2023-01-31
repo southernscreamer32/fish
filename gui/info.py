@@ -14,6 +14,7 @@ class Info(QWidget):
         self.layout.addWidget(self.tds)
         self.layout.addWidget(self.ph)
         self.layout.addWidget(self.weight)
+        self.layout.addWidget(QLabel("Code available at https://github.com/goldspaghetti/fish"))
 
         self.setLayout(self.layout)
 

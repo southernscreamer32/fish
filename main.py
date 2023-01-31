@@ -42,6 +42,8 @@ def comms():
         
 
 if __name__ == "__main__":
+
+    print("Code available at https://github.com/goldspaghetti/fish")
     openai.api_key = OPEN_AI_KEY
 
     app = QApplication([])
