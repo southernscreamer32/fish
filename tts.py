@@ -4,10 +4,9 @@ from TTS.api import TTS
 import numpy as np
 import pyrubberband as pyrb
 import queue, threading, time
-from config import *
+import requests
 # import torch
 
-openai.api_key = OPEN_AI_KEY
 class TextToSpeech():
     # text to speech handlesdropping 
     # curr_playing = False
@@ -16,6 +15,20 @@ class TextToSpeech():
         # x = torch.rand(5, 3)
         # print(x)
         # print(torch.cuda.is_available())
+
+        self.name = 'Sakana'
+        description = f'{self.name} is a fish being livestreamed on Twitch. She is quite arrogant about the size of her tank.'
+        # print(description)
+        requests.put('http://localhost:5000/api/v1/model', headers={'accept': 'application/json', 'Content-Type': 'application/json'}, data='{"model": "PygmalionAI/pygmalion-6b"}')
+        requests.put('http://localhost:5000/api/v1/config/authors_note',
+                     headers={'accept': 'application/json', 'Content-Type': 'application/json'},
+                     data=f'{{"value": "{description}"}}').json()
+        requests.put('http://localhost:5000/api/v1/config/authors_note_template',
+                     headers={'accept': 'application/json', 'Content-Type': 'application/json'},
+                     data='{"value": [Author\'s note: <|>]}"')
+        requests.put('http://localhost:5000/api/v1/config/temperature', headers={'accept': 'application/json'}, data='{"value": 0.5}')
+        requests.put('http://localhost:5000/api/v1/config/max_length', headers={'accept': 'application/json'}, data='{"value": 200}')
+        requests.put('http://localhost:5000/api/v1/config/frmtrmblln',headers={'accept': 'application/json'},data='{"value": false}')
 
         self.tts = TTS("tts_models/en/vctk/vits", gpu=False)
         
@@ -49,6 +62,12 @@ class TextToSpeech():
         #     self.audio_device = sd.default.device[1]
         # self.audio_stream = sd.OutputStream(samplerate=22050, device=self.audio_device, channels=2, finished_callback=self.set_audio_false)
 
+    def chat(self,prompt):
+        prompt = f"You:{prompt}\\n{self.name}:"
+        return requests.post('http://localhost:5000/api/v1/generate',
+                             headers={'accept': 'application/json', 'Content-Type': 'application/json'},
+                             data=f'{{"prompt": \"{prompt}\"}}').json()['results'][0]['text']
+        # print(u)
     def audio_callback(outdata, frames, time, status):
         print("AAA")
         if TextToSpeech.curr_playing:
@@ -61,21 +80,7 @@ class TextToSpeech():
         self.curr_playing = False
 
     def nightcore(self, sample,sr):
-        return pyrb.time_stretch(np.asarray(sample), sr, 2.0)
-
-    def gpt(prompt):
-        completion = openai.Completion.create(
-            engine="text-davinci-003",
-            prompt=f"Answer this as if you were a fish in an aquarium being live streamed on Twitch. {prompt}",
-            max_tokens=1024,
-            n=1,
-            stop=None,
-            temperature=0.9,
-            presence_penalty=0.5,
-            frequency_penalty=0.5,
-        )
-
-        return completion.choices[0].text
+        return pyrb.time_stretch(np.asarray(sample), sr,1.2)
 
     def try_fishspeak(self, prompt):
         self.speak_queue.put(prompt)
@@ -116,7 +121,7 @@ class TextToSpeech():
         # array = nightcore(array,22050)
 
         # start audio
-        sd.play(array, 22050)
+        sd.play(array, 11*22050/10)
         status = sd.wait()
         sd.stop()
         self.last_speak = time.time()
@@ -127,9 +132,9 @@ if __name__ == "__main__":
     # thread = threading.Thread(target=tts.try_fishspeak, daemon=True)
     # thread.start()
     time.sleep(1)
-    tts.speak_queue.put(TextToSpeech.gpt("can you laugh?"))
+    tts.speak_queue.put(TextToSpeech.chat("can you laugh?"))
     time.sleep(6)
-    tts.speak_queue.put(TextToSpeech.gpt("What do you think about Xi Jinping"))
+    tts.speak_queue.put(TextToSpeech.chat("What do you think about Xi Jinping"))
     # tts.fishspeak("Can you laugh?")
     # tts.fishspeak("Can you laugh?")
     time.sleep(5)
