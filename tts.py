@@ -5,7 +5,7 @@ import numpy as np
 import pyrubberband as pyrb
 import queue, threading, time
 import requests
-# import torch
+import torch
 
 class TextToSpeech():
     # text to speech handlesdropping 
@@ -32,27 +32,13 @@ class TextToSpeech():
 
         self.tts = TTS("tts_models/en/vctk/vits", gpu=False)
         
-        self.speak_queue = queue.Queue()
-        
         # audio stuff
         self.curr_playing = False
         self.delay = 1  #delay in secs before saying something new
         self.last_speak = time.time()
 
-        self.audio = []
-        devices = sd.query_devices()
-        print(devices)
-        self.audio_device = sd.default.device[0]
-        print(self.audio_device)
-        for device in devices:
-            # print(device["name"])
-            # print(device)
-            if device["name"] == "virtual audio cable": # change name
-                self.audio_device = device["index"]
-                sd.default.device = device["index"]
-                break
-        fish_thread = threading.Thread(target=self.try_fishspeak_loop, daemon=True)
-        fish_thread.start()
+        # fish_thread = threading.Thread(target=self.try_fishspeak_loop, daemon=True)
+        # fish_thread.start()
         # sd.default.device
         # print(self.audio_device.name)
         # self.audio_device = sd.query_devices("virtual audio cable") #change name to match actual device name!
@@ -60,7 +46,7 @@ class TextToSpeech():
         #     self.audio_device = self.audio_device[0].name
         # else:
         #     self.audio_device = sd.default.device[1]
-        # self.audio_stream = sd.OutputStream(samplerate=22050, device=self.audio_device, channels=2, finished_callback=self.set_audio_false)
+        # self.audio_stream = sd.OutputStream(samplerate=22050)
 
     def chat(self,prompt):
         prompt = f"You:{prompt}\\n{self.name}:"
@@ -68,40 +54,20 @@ class TextToSpeech():
                              headers={'accept': 'application/json', 'Content-Type': 'application/json'},
                              data=f'{{"prompt": \"{prompt}\"}}').json()['results'][0]['text']
         # print(u)
-    def audio_callback(outdata, frames, time, status):
-        print("AAA")
-        if TextToSpeech.curr_playing:
-            
-        # if self.curr_playing:
-            outdata[:] = TextToSpeech.audio
-            print(len(TextToSpeech.audio))
-
-    def set_audio_false(self):
-        self.curr_playing = False
+    # def audio_callback(outdata, frames, time, status):
+    #     print("AAA")
+    #     if TextToSpeech.curr_playing:
+    #
+    #     # if self.curr_playing:
+    #         outdata[:] = TextToSpeech.audio
+    #         print(len(TextToSpeech.audio))
 
     def nightcore(self, sample,sr):
         return pyrb.time_stretch(np.asarray(sample), sr,1.2)
 
     def try_fishspeak(self, prompt):
-        self.speak_queue.put(prompt)
-
-    def try_fishspeak_loop(self):
-        while True:
-            # print("AA")
-            # print(self.speak_queue.empty())
-            if not self.speak_queue.empty():
-                print("A")
-                prompt = self.speak_queue.get()
-                # process_time does not count sleeping
-                if time.time() - self.last_speak > self.delay and not self.curr_playing:
-                    print("speaking ")
-                    self.fishspeak(prompt)
-                else:
-                    print("refuse to speak")
-                    print(time.time() - self.last_speak)
-                    print(self.curr_playing)
-            time.sleep(0.01)
-                
+        if(not self.curr_playing):
+            self.fishspeak(prompt)
 
     def fishspeak(self, prompt):
         self.curr_playing = True
@@ -131,10 +97,6 @@ if __name__ == "__main__":
     tts = TextToSpeech()
     # thread = threading.Thread(target=tts.try_fishspeak, daemon=True)
     # thread.start()
-    time.sleep(1)
-    tts.speak_queue.put(TextToSpeech.chat("can you laugh?"))
-    time.sleep(6)
-    tts.speak_queue.put(TextToSpeech.chat("What do you think about Xi Jinping"))
     # tts.fishspeak("Can you laugh?")
     # tts.fishspeak("Can you laugh?")
     time.sleep(5)

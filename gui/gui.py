@@ -1,9 +1,9 @@
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
+from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel
 from PyQt6.QtCore import Qt
 
 from .camera import Camera
 from .info import Info
-# from .game_input import GameInput
+from .game_input import GameInput
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -22,7 +22,7 @@ class MainWindow(QMainWindow):
 
         self.setCentralWidget(self.frame)
 
-        self.move(1400,850)
+        self.move(1400, 850)
         
 class Display(QWidget):
     def __init__(self):
@@ -35,16 +35,18 @@ class Display(QWidget):
                 border-radius: 20px;
             }
         """)
-        # self.game = GameInput()
-
-
-        self.camera = Camera(0)
-        self.info = Info()
-
         self.layout = QVBoxLayout()
 
+        self.game = GameInput()
+
+        self.camera = Camera(0)
         self.layout.addWidget(self.camera)
+
+        self.info = Info()
         self.layout.addWidget(self.info)
+
+        self.layout.addWidget(QLabel("videogame"))
+
 
         self.layout.setContentsMargins(20,20,20,20)
 

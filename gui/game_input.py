@@ -43,10 +43,10 @@ class GameInput:
                         chosen_num = j * self.dim_x + i
             chosen_key = self.input[chosen_num]
             print(f"chosen key: {chosen_key}")
-            if chosen_key == 'enter':
-                pyautogui.click()
-            else:
-                pyautogui.press(chosen_key)
+            # if chosen_key == 'enter':
+            #     pyautogui.click()
+            # else:
+            pyautogui.press(chosen_key)
 
 
 if __name__ == "__main__":
