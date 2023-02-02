@@ -1,33 +1,15 @@
 from twitchio.ext import commands
 from random import choice
 
-import openai
-
 from config import *
 from tts import TextToSpeech
 
 
 #just use from tts
 
-
-# def chatgpt(prompt):
-#     completion = openai.Completion.create(
-#         engine="text-curie-001",
-#         prompt=f'Answer this as if you were a fish in an aquarium being live streamed on Twitch. {prompt}',
-#         max_tokens=1024,
-#         n=1,
-#         stop=None,
-#         temperature=0.9,
-#         presence_penalty=0.5,
-#         frequency_penalty=0.5,
-#     )
-#
-#     return completion.choices[0].text
-
-
 class Bot(commands.Bot):
     def __init__(self):
-        super().__init__(token=OAUTH_TOKEN, prefix="fish", initial_channels=CHANNELS)
+        super().__init__(token=OAUTH_TOKEN, pporefix="fish", initial_channels=CHANNELS)
         self.feeding = True
         self.tts = TextToSpeech()  # TextToSpeech
 
@@ -66,7 +48,7 @@ class Bot(commands.Bot):
 
     @commands.command()
     async def ask(self, ctx):
-        response = TextToSpeech.gpt(ctx.message.content)
+        response = TextToSpeech.chat(ctx.message.content)
 
         if len(response) <= 500:
             await ctx.send(response)
@@ -85,13 +67,10 @@ class Bot(commands.Bot):
     async def event_command_error(self, ctx, error):
         if isinstance(error, commands.errors.CommandOnCooldown):
             await ctx.send(f'The "{error.command.name}" command is currently on a cooldown for another {round(error.retry_after)} second(s)! {ctx.author.name}')
-        elif isinstance(error, openai.error.RateLimitError):
-            await ctx.send("The API server is currently overloaded, please try again later")
         elif not isinstance(error, commands.errors.CommandNotFound):
             raise error
 
 if __name__ == "__main__":
-    openai.api_key = OPEN_AI_KEY
 
     bot = Bot()
     bot.run()

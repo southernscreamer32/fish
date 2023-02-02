@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8e693de-ea99-407f-8797-529841266d79" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/tank-info.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tts.py" beforeDir="false" afterPath="$PROJECT_DIR$/tts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/twitchbot/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitchbot/bot.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
