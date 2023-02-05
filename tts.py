@@ -87,7 +87,8 @@ class TextToSpeech():
         # array = nightcore(array,22050)
 
         # start audio
-        sd.play(array, 11*22050/10)
+        sd.default.samplerate = 11*22050/10
+        sd.play(array)
         status = sd.wait()
         sd.stop()
         self.last_speak = time.time()
