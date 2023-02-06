@@ -1,9 +1,8 @@
+#twitchio is MIT
 from twitchio.ext import commands
 from random import choice
 
-from config import *
 from tts import TextToSpeech
-
 
 #just use from tts
 
@@ -28,15 +27,15 @@ class Bot(commands.Bot):
     async def help(self, ctx):
         await ctx.send(f'"{self._prefix} help": shows this• "{self._prefix} feed": activate the fish feeder (60-second cooldown) • "{self._prefix} fact": random fish fact • "{self._prefix} ask (question)": ask the fish a question (OpenAI)')
 
-    @commands.cooldown(rate=1, per=60, bucket=commands.Bucket.channel)
-    @commands.command()
-    async def feed(self, ctx):
-        if self.feeding:
-            await ctx.send(f"/announce The fish feeder has been activated by {ctx.author.name}!")
-            with open("twitchbot/feed", "w") as f:
-                f.write("1")
-        else:
-            await ctx.send("Feeding command is not active!")
+    # @commands.cooldown(rate=1, per=60, bucket=commands.Bucket.channel)
+    # @commands.command()
+    # async def feed(self, ctx):
+    #     if self.feeding:
+    #         await ctx.send(f"/announce The fish feeder has been activated by {ctx.author.name}!")
+    #         with open("twitchbot/feed", "w") as f:
+    #             f.write("1")
+    #     else:
+    #         await ctx.send("Feeding command is not active!")
 
     @commands.command()
     async def fact(self, ctx):
@@ -44,7 +43,6 @@ class Bot(commands.Bot):
             response = choice(f.readlines())
             await ctx.send(response)
             self.tts.try_fishspeak(response)
-
 
     @commands.command()
     async def ask(self, ctx):

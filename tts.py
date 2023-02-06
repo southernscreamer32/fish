@@ -1,11 +1,17 @@
-import openai
+#sounddevice is MIT
 import sounddevice as sd
+#TTS is MPL 2
 from TTS.api import TTS
+#numpy is BSD-3
 import numpy as np
+#pyrubberband is ISC
+#equiv to MIT
 import pyrubberband as pyrb
 import queue, threading, time
+#requests is AL 2
 import requests
-import torch
+
+#kobold is AGPL 3
 
 class TextToSpeech():
     # text to speech handlesdropping 
@@ -34,19 +40,19 @@ class TextToSpeech():
         
         # audio stuff
         self.curr_playing = False
+        self.queue = queue.Queue(3)
         self.delay = 1  #delay in secs before saying something new
         self.last_speak = time.time()
+        sd.default.samplerate = 11 * 22050 / 10
 
-        # fish_thread = threading.Thread(target=self.try_fishspeak_loop, daemon=True)
-        # fish_thread.start()
-        # sd.default.device
-        # print(self.audio_device.name)
-        # self.audio_device = sd.query_devices("virtual audio cable") #change name to match actual device name!
         # if self.audio_device:
         #     self.audio_device = self.audio_device[0].name
         # else:
         #     self.audio_device = sd.default.device[1]
         # self.audio_stream = sd.OutputStream(samplerate=22050)
+
+        fish_thread = threading.Thread(target=self.fishloop, daemon=True)
+        fish_thread.start()
 
     def chat(self,prompt):
         prompt = f"You:{prompt}\\n{self.name}:"
@@ -66,8 +72,7 @@ class TextToSpeech():
         return pyrb.time_stretch(np.asarray(sample), sr,1.2)
 
     def try_fishspeak(self, prompt):
-        if(not self.curr_playing):
-            self.fishspeak(prompt)
+        self.queue.put(prompt)
 
     def fishspeak(self, prompt):
         self.curr_playing = True
@@ -87,12 +92,25 @@ class TextToSpeech():
         # array = nightcore(array,22050)
 
         # start audio
-        sd.default.samplerate = 11*22050/10
         sd.play(array)
         status = sd.wait()
         sd.stop()
         self.last_speak = time.time()
         self.curr_playing = False
+
+    def fishloop(self,prompt):
+        while(True):
+            if not self.queue.empty():
+                prompt = self.queue.get()
+            else:
+                prompt = self.genprompt()
+            if not self.curr_playing:
+                self.fishspeak(prompt)
+            time.sleep(30)
+
+    def genprompt(self):
+        return "placeholder for game info"
+
 
 if __name__ == "__main__":
     tts = TextToSpeech()

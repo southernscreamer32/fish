@@ -1,6 +1,5 @@
-# Standard imports
+#opencv is MIT
 import cv2
-import numpy as np;
 
 # Read image
 cam = cv2.VideoCapture(0)
@@ -12,7 +11,6 @@ while(1):
             break
 
         canvas = frame.copy()
-
 
         lower = (80,0,0)  #130,150,80
         upper = (255,200,200) #250,250,120

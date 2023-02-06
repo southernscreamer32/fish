@@ -3,8 +3,6 @@
 
 This program includes tools for managing a fish enclosure and for running a fish-based Twitch streamer.
 
-Catch our streams [here](https://www.twitch.tv/chickwensrule)!
-
 # License
 Copyright (C) 2022 Fish Inquiry Society Holdings
 

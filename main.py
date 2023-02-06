@@ -1,3 +1,4 @@
+#PyQt6 is GPL 3
 from PyQt6.QtWidgets import QApplication
 
 from threading import Thread
@@ -7,12 +8,9 @@ from gui.gui import MainWindow
 from twitchbot.bot import Bot
 from sensorinterface import ArduinoComm
 
-import openai
 from config import *
 
 from time import sleep
-
-
 
 def tb():
     # # global bot
@@ -44,7 +42,6 @@ def comms():
 if __name__ == "__main__":
 
     print("Code available at https://github.com/goldspaghetti/fish")
-    openai.api_key = OPEN_AI_KEY
 
     app = QApplication([])
 

@@ -1,8 +1,10 @@
+#PyQt6 is GPL 3
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QVBoxLayout, QLabel
 from PyQt6.QtGui import QImage, QPixmap
 from PyQt6.QtCore import Qt, QThread, pyqtSignal, pyqtSlot
-
+#opencv is MIT
 import cv2
+#numpy is BSD-3
 from numpy import array, ndarray
 from .game_input import GameInput
 
