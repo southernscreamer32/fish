@@ -1,5 +1,7 @@
 #pyautogui is BSD-3
-import pyautogui, time
+import pyautogui
+
+import time
 # from pywinauto.application import Application
 
 

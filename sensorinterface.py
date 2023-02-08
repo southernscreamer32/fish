@@ -1,8 +1,9 @@
-import queue, struct, threading
-from time import sleep
 #pyserial is BSD 3
 from serial import *
 from serial.tools import list_ports
+
+import queue, struct, threading
+from time import sleep
 
 # using can-passthrough!
 class ArduinoComm:

@@ -6,6 +6,7 @@ from PyQt6.QtCore import Qt, QThread, pyqtSignal, pyqtSlot
 import cv2
 #numpy is BSD-3
 from numpy import array, ndarray
+
 from .game_input import GameInput
 
 class Camera(QLabel):
